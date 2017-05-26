@@ -75,7 +75,8 @@ namespace MineToot
 
             // Walked
             deathDt.Rows.Add("(.*?) walked into a cactus whilst trying to escape (.*?)$", "$1 は $2 から逃げようとしてサボテンにぶつかってしまった");
-            deathDt.Rows.Add("(.*?) walked into a fire whilst fighting (.*?)$", "$1 は $2 と戦いながら火の中へ踏み入れてしまった");
+            deathDt.Rows.Add("(.*?) walked into fire whilst fighting (.*?)$", "$1 は $2 と戦いながら火の中へ踏み入れてしまった");
+            deathDt.Rows.Add("(.*?) walked into danger zone due to (.*?)$", "$1 は $2 に追われて危険地帯に足を踏み入れた");
 
             // Drowned
             deathDt.Rows.Add("(.*?) drowned whilst trying to escape (.*?)$", "$1 は $2 から逃れようとして溺れ死んでしまった");
@@ -187,6 +188,18 @@ namespace MineToot
                 }
             }
             return str;
+        }
+
+        public string userName
+        {
+            get
+            {
+                return user;
+            }
+            //set
+            //{
+            //    user = value;
+            //}
         }
     }
 }

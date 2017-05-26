@@ -8,6 +8,9 @@ namespace MineToot
         private string time = "";
         private string type = "";
         private string user = "";
+        private bool isTranslated = false;
+
+        private bool doToot = false;
 
         clsDeathMsg clsDM = new clsDeathMsg();
 
@@ -25,11 +28,10 @@ namespace MineToot
             return baseStrAry;
         }
 
-        public string parseLogLine(string msg)
+        public string parseLogLine(string msg, string svName)
         {
             string text = "";
             string say = "";
-            string obj = "";
             string outMsg = "";
             string[] baseAry;
             baseAry = baseReg.Split(msg);
@@ -47,6 +49,8 @@ namespace MineToot
                     user = chatAry[1];
                     say = chatAry[2];
                     outMsg = user + ": " + say + Environment.NewLine;
+
+                    isTranslated = true;
                 }
                 // Join/Leave
                 else if (joinleftReg.Matches(text).Count != 0)
@@ -63,16 +67,85 @@ namespace MineToot
                     {
                         outMsg = "[System]: " + user + "がログアウトしました\r\n";
                     }
+
+                    isTranslated = true;
                 }
                // Death
                 else if (type.ToLower() == "server thread/info" && clsDM.isDeathDt(text))
                 {
+                    user = clsDM.userName;
                     type = "Death";
                     outMsg = "[System]: " + clsDM.assemMsg(text) + Environment.NewLine;
+
+                    isTranslated = true;
+                }
+                else
+                {
+                    isTranslated = false;
                 }
             }
 
-            return "Type: " + type + Environment.NewLine + "#taihacraft <" + time + ">\r\n" + outMsg;
+            return  svName + " <" + time + ">\r\nType: " + type + Environment.NewLine + outMsg;
+        }
+
+        public bool chkDoToot()
+        {
+            bool flgType = false;
+            switch (type)
+            {
+                case "Joined/Left":
+                    flgType = settings.app.Default.loginout;
+                    break;
+                case "Death":
+                    flgType = settings.app.Default.death;
+                    break;
+                case "Chat":
+                    flgType = settings.app.Default.chat;
+                    break;
+                default:
+                    flgType = false;
+                    break;
+            }
+
+            if (flgType)
+            {
+                if (settings.users.Default.user != "")
+                {
+                    string[] ary = settings.users.Default.user.Split(',');
+
+                    for(int i = 0; i < ary.Length; i++)
+                    {
+                        if(ary[i] == user)
+                        {
+                            doToot = true;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    doToot = true;
+                }
+            }
+            else
+            {
+                doToot = false;
+            }
+
+            return doToot;
+            
+        }
+
+        public bool translated
+        {
+            get
+            {
+                return isTranslated;
+            }
+            set
+            {
+                isTranslated = value;
+            }
         }
     }
 }

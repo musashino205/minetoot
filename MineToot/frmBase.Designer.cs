@@ -35,17 +35,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.txtReadInterval = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtTrans = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtLogMsg = new System.Windows.Forms.TextBox();
             this.ofdLog = new System.Windows.Forms.OpenFileDialog();
             this.tmrReadInterval = new System.Windows.Forms.Timer(this.components);
-            this.chkToot = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -60,7 +59,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Size = new System.Drawing.Size(584, 50);
@@ -107,35 +106,26 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox2.Location = new System.Drawing.Point(0, 50);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(100, 411);
+            this.groupBox2.Size = new System.Drawing.Size(100, 451);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.txtReadInterval);
             this.flowLayoutPanel1.Controls.Add(this.btnStart);
             this.flowLayoutPanel1.Controls.Add(this.btnStop);
             this.flowLayoutPanel1.Controls.Add(this.btnTest);
-            this.flowLayoutPanel1.Controls.Add(this.chkToot);
+            this.flowLayoutPanel1.Controls.Add(this.btnSettings);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(94, 387);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(94, 427);
             this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // txtReadInterval
-            // 
-            this.txtReadInterval.Location = new System.Drawing.Point(3, 3);
-            this.txtReadInterval.Name = "txtReadInterval";
-            this.txtReadInterval.Size = new System.Drawing.Size(88, 25);
-            this.txtReadInterval.TabIndex = 3;
-            this.txtReadInterval.Text = "100";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(3, 34);
+            this.btnStart.Location = new System.Drawing.Point(3, 3);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(88, 30);
             this.btnStart.TabIndex = 0;
@@ -145,7 +135,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(3, 70);
+            this.btnStop.Location = new System.Drawing.Point(3, 39);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(88, 30);
             this.btnStop.TabIndex = 1;
@@ -155,7 +145,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(3, 106);
+            this.btnTest.Location = new System.Drawing.Point(3, 75);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(88, 30);
             this.btnTest.TabIndex = 2;
@@ -163,14 +153,26 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.Location = new System.Drawing.Point(3, 111);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(88, 30);
+            this.btnSettings.TabIndex = 5;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.txtTrans);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox3.Location = new System.Drawing.Point(100, 50);
+            this.groupBox3.Location = new System.Drawing.Point(103, 50);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(484, 212);
-            this.groupBox3.TabIndex = 2;
+            this.groupBox3.Size = new System.Drawing.Size(481, 218);
+            this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Translated Messages";
             // 
@@ -183,7 +185,7 @@
             this.txtTrans.Name = "txtTrans";
             this.txtTrans.ReadOnly = true;
             this.txtTrans.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTrans.Size = new System.Drawing.Size(478, 188);
+            this.txtTrans.Size = new System.Drawing.Size(475, 194);
             this.txtTrans.TabIndex = 0;
             // 
             // groupBox4
@@ -192,9 +194,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.txtLogMsg);
-            this.groupBox4.Location = new System.Drawing.Point(100, 268);
+            this.groupBox4.Location = new System.Drawing.Point(100, 271);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(484, 193);
+            this.groupBox4.Size = new System.Drawing.Size(484, 230);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Log Messages";
@@ -208,7 +210,7 @@
             this.txtLogMsg.Name = "txtLogMsg";
             this.txtLogMsg.ReadOnly = true;
             this.txtLogMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLogMsg.Size = new System.Drawing.Size(478, 169);
+            this.txtLogMsg.Size = new System.Drawing.Size(478, 206);
             this.txtLogMsg.TabIndex = 0;
             // 
             // ofdLog
@@ -219,21 +221,12 @@
             // 
             this.tmrReadInterval.Tick += new System.EventHandler(this.tmrReadInterval_Tick);
             // 
-            // chkToot
-            // 
-            this.chkToot.Location = new System.Drawing.Point(3, 142);
-            this.chkToot.Name = "chkToot";
-            this.chkToot.Size = new System.Drawing.Size(88, 30);
-            this.chkToot.TabIndex = 4;
-            this.chkToot.Text = "Toot";
-            this.chkToot.UseVisualStyleBackColor = true;
-            // 
             // frmBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(584, 461);
+            this.ClientSize = new System.Drawing.Size(584, 501);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -242,12 +235,11 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "frmBase";
-            this.Text = "Mine";
+            this.Text = "MineToot";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -273,8 +265,7 @@
         private System.Windows.Forms.TextBox txtTrans;
         private System.Windows.Forms.TextBox txtLogMsg;
         private System.Windows.Forms.Timer tmrReadInterval;
-        private System.Windows.Forms.TextBox txtReadInterval;
-        private System.Windows.Forms.CheckBox chkToot;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 

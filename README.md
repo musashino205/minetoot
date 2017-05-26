@@ -1,4 +1,4 @@
-# minetoot
+# MineToot
 
 ## Summery
 Minecraftのログを読み込んで、何かログが追加されたら日本語に変換したうえで Mastodon にTootできるプログラムです。
@@ -14,4 +14,12 @@ Released under the MIT license
 http://opensource.org/licenses/mit-license.php 
 
 ## 色々
-力尽きたので後日書きます
+
+### 注意事項
+- Mastodon のアクセストークンは現状平文で保存されます
+- ユーザー名フィルター、テキストフィルターは未実装です
+- [スクリーンショット](https://mstdn.maud.io/@musashino205/2257289)
+
+## 参考
+### 正規表現・一部ロジック
+[roamer7038/minecraft-log-slack](https://github.com/roamer7038/minecraft-log-slack)

@@ -10,22 +10,62 @@ namespace MineToot
 {
     public partial class frmBase : Form
     {
-        string logPath = "";
-        string logFileName = "";
-        string logDirName = "";
-        string logLastLine = "";
+        private string logPath = "";
+        private string logFileName = "";
+        private string logDirName = "";
+        private string logLastLine = "";
+
+        // settings
+        bool loginout = true;
+        bool death = true;
+        bool chat = false;
+        string svDomain = "";
+        string svName = "Minecraft Server";
+        int interval = 100;
+        string token = "";
+        int privacyIndex = 1;
+        bool toot = false;
 
         clsParseLog clsPL = new clsParseLog();
         clsDeathMsg clsDM = new clsDeathMsg();
 
+        frmSettings fTS;
+
         public frmBase()
         {
             InitializeComponent();
+
+            loadSettings();
+        }
+
+        private void loadSettings()
+        {
+            // settings 読み込み
+            loginout = settings.app.Default.loginout;
+
+            death = settings.app.Default.death;
+
+            chat = settings.app.Default.chat;
+
+            if (settings.app.Default.server_domain != "")
+                svDomain = settings.app.Default.server_domain;
+
+            if (settings.app.Default.server_name != "")
+                svName = settings.app.Default.server_name;
+
+            interval = settings.app.Default.interval;
+
+            if (settings.app.Default.token != "")
+                token = settings.app.Default.token;
+
+            privacyIndex = settings.app.Default.privacy;
+
+            toot = settings.app.Default.toot;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            clsDM.dtXml("ja");
+
         }
 
         private void btnOpenLog_Click(object sender, EventArgs e)
@@ -109,11 +149,7 @@ namespace MineToot
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            readAll(logPath);
-            if (txtReadInterval.Text != "" && int.TryParse(txtReadInterval.Text, out int d))
-                tmrReadInterval.Interval = Convert.ToInt32(txtReadInterval.Text);
-            else
-                tmrReadInterval.Interval = 100;
+            tmrReadInterval.Interval = interval;
 
             tmrReadInterval.Enabled = true;
             txtTrans.Text += Environment.NewLine + "##### Logfile monitoring started #####" + Environment.NewLine;
@@ -126,6 +162,11 @@ namespace MineToot
             string parsedStr = "";
             if (logLastLine != lastline)
             {
+                //if (txtSvName.Text != "")
+                //{
+                //    svName = txtSvName.Text;
+                //}
+
                 txtLogMsg.Text += lastline + Environment.NewLine;
                 logLastLine = lastline;
                 scrollLogLL();
@@ -138,11 +179,11 @@ namespace MineToot
                     + strAry[2] + Environment.NewLine
                     + strAry[3] + Environment.NewLine;
                 txtTrans.Text += "-----<parsed data>-----\r\n";
-                parsedStr = clsPL.parseLogLine(lastline);
+                parsedStr = clsPL.parseLogLine(lastline, svName);
                 txtTrans.Text += parsedStr;
                 scrollTransLL();
 
-                if (chkToot.Checked)
+                if (toot && clsPL.translated && clsPL.chkDoToot())
                     postTootHttp(parsedStr);
             }
         }
@@ -158,20 +199,36 @@ namespace MineToot
         // HttpClient
         private async void postTootHttp(string text)
         {
+            // privacy
+            string privacy = "";
+            switch (privacyIndex)
+            {
+                case 0:
+                    privacy = "public";
+                    break;
+                case 1:
+                    privacy = "unlisted";
+                    break;
+                case 2:
+                default:
+                    privacy = "private";
+                    break;
+            }
+
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = int.MaxValue;
             var content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                { "access_token", "own_token_here" },
+                { "access_token", token },
                 { "status", text },
-                { "visibility", "unlisted" }
+                { "visibility", privacy }
             });
             var response = new HttpResponseMessage();
 
 
-            response = await client.PostAsync("https://your.domain/api/v1/statuses", content);
+            response = await client.PostAsync("https://" + svDomain + "/api/v1/statuses", content);
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -179,6 +236,12 @@ namespace MineToot
             postTootHttp("test");
         }
 
-        // WebRequest
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            fTS = new frmSettings();
+            fTS.ShowDialog();
+
+            loadSettings();
+        }
     }
 }
