@@ -236,7 +236,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "frmBase";
             this.Text = "MineToot";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.frmBase_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);

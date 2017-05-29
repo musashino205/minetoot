@@ -12,7 +12,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="interval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">250</Value>
     </Setting>
     <Setting Name="server_name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Minecraft Server</Value>

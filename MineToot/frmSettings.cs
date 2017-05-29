@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace MineToot
 {
@@ -15,15 +8,6 @@ namespace MineToot
     {
         private DataTable dtUsers = new DataTable();
         private DataTable dtTexts = new DataTable();
-        
-        private string pathUsers = @".\config\users.xml";
-        private string pathTexts = @".\config\texts.xml";
-
-        private bool loginout = true;
-        private bool death = true;
-        private bool chat = false;
-
-        private string[] aryCategory = new string[3];
 
         public frmSettings()
         {
@@ -65,11 +49,14 @@ namespace MineToot
                 string[] ary = settings.users.Default.user.Split(',');
                 for (int i = 0; i < ary.Length; i++)
                 {
-                    dtUsers.Rows.Add(ary[i]);
+                    if (ary[i] != "")
+                        dtUsers.Rows.Add(ary[i]);
                 }
             }
 
             dgvUsers.DataSource = dtUsers;
+
+            dgvUsers.Columns[0].Width = dgvUsers.Width - 50;
         }
 
         private void frmTootSettings_Load(object sender, EventArgs e)
@@ -79,6 +66,17 @@ namespace MineToot
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            // dtUsers -> users.settings
+            string strUsers = "";
+
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+                strUsers += dtUsers.Rows[i][0] + ",";
+            }
+
+            settings.users.Default.user = strUsers;
+
+            // settings
             settings.app.Default.loginout = chkLoginout.Checked;
             settings.app.Default.death = chkDeath.Checked;
             settings.app.Default.chat = chkChat.Checked;
@@ -89,6 +87,7 @@ namespace MineToot
             settings.app.Default.privacy = cmbPrivacy.SelectedIndex;
             settings.app.Default.toot = chkToot.Checked;
 
+            settings.users.Default.Save();
             settings.app.Default.Save();
             this.Close();
         }

@@ -63,9 +63,9 @@ namespace MineToot
             toot = settings.app.Default.toot;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmBase_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnOpenLog_Click(object sender, EventArgs e)
@@ -95,7 +95,7 @@ namespace MineToot
             fs.Close();
 
             // Read last line in logfile
-            logLastLine = readLL(logPath);
+            //logLastLine = readLL(logPath);
 
             scrollLogLL();
             scrollTransLL();
@@ -149,6 +149,7 @@ namespace MineToot
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            logLastLine = readLL(logPath);
             tmrReadInterval.Interval = interval;
 
             tmrReadInterval.Enabled = true;
@@ -162,11 +163,6 @@ namespace MineToot
             string parsedStr = "";
             if (logLastLine != lastline)
             {
-                //if (txtSvName.Text != "")
-                //{
-                //    svName = txtSvName.Text;
-                //}
-
                 txtLogMsg.Text += lastline + Environment.NewLine;
                 logLastLine = lastline;
                 scrollLogLL();

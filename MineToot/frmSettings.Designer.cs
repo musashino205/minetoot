@@ -306,12 +306,17 @@
             this.numInterval.Font = new System.Drawing.Font("Meiryo UI", 9F);
             this.numInterval.Location = new System.Drawing.Point(3, 128);
             this.numInterval.Margin = new System.Windows.Forms.Padding(0);
+            this.numInterval.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numInterval.Name = "numInterval";
             this.numInterval.Size = new System.Drawing.Size(165, 23);
             this.numInterval.TabIndex = 6;
             this.numInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numInterval.Value = new decimal(new int[] {
-            100,
+            250,
             0,
             0,
             0});

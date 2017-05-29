@@ -16,7 +16,7 @@ namespace MineToot
 
         Regex baseReg = new Regex(@"^\[(\d{2}:\d{2}:\d{2})\]\s+\[([^\]]+)\]:\s+(.*?)$", RegexOptions.IgnoreCase);
         Regex chatReg = new Regex(@"^<([^>]+)>\s+(.*?)$", RegexOptions.IgnoreCase);
-        Regex joinleftReg = new Regex(@"^(.*)(joined|left) the game", RegexOptions.IgnoreCase);
+        Regex joinleftReg = new Regex(@"^(.*) (joined|left) the game", RegexOptions.IgnoreCase);
         Regex uuidReg2 = new Regex(@"UUID of player (\S+) is (\S+)");
 
         public string[] parseLogAray(string msg)
@@ -113,14 +113,10 @@ namespace MineToot
                 {
                     string[] ary = settings.users.Default.user.Split(',');
 
-                    for(int i = 0; i < ary.Length; i++)
-                    {
-                        if(ary[i] == user)
-                        {
-                            doToot = true;
-                            break;
-                        }
-                    }
+                    if (Array.IndexOf(ary, user) != -1)
+                        doToot = false;
+                    else
+                        doToot = true;
                 }
                 else
                 {
