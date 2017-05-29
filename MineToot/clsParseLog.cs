@@ -15,9 +15,12 @@ namespace MineToot
         clsDeathMsg clsDM = new clsDeathMsg();
 
         Regex baseReg = new Regex(@"^\[(\d{2}:\d{2}:\d{2})\]\s+\[([^\]]+)\]:\s+(.*?)$", RegexOptions.IgnoreCase);
-        Regex chatReg = new Regex(@"^<([^>]+)>\s+(.*?)$", RegexOptions.IgnoreCase);
+        Regex chatReg = new Regex(@"^<([^>]+)>\s+(.*?)(|\u001b\[m)$", RegexOptions.IgnoreCase);
         Regex joinleftReg = new Regex(@"^(.*) (joined|left) the game", RegexOptions.IgnoreCase);
         Regex uuidReg2 = new Regex(@"UUID of player (\S+) is (\S+)");
+        // for Spigot
+        Regex loginReg = new Regex(@"^(.*)\[/(.*):.*\] logged in .*", RegexOptions.IgnoreCase);
+        Regex chatTypeReg = new Regex(@"^async chat thread - #\d{1}/info", RegexOptions.IgnoreCase);
 
         public string[] parseLogAray(string msg)
         {
@@ -42,13 +45,23 @@ namespace MineToot
                 text = baseAry[3];
 
                 // Chat
-                if(type.ToLower() == "server thread/info" && chatReg.Matches(text).Count != 0)
+                if((type.ToLower() == "server thread/info" || chatTypeReg.Matches(type).Count != 0) && chatReg.Matches(text).Count != 0)
                 {
                     string[] chatAry = chatReg.Split(text);
                     type = "Chat";
                     user = chatAry[1];
                     say = chatAry[2];
                     outMsg = user + ": " + say + Environment.NewLine;
+
+                    isTranslated = true;
+                }
+                // Login (for Spigot)
+                else if (loginReg.Matches(text).Count != 0)
+                {
+                    string[] joinleftAry = loginReg.Split(text);
+                    user = joinleftAry[1];
+                    type = "Joined/Left";
+                    outMsg = "[System]: " + user + " がログインしました\r\n";
 
                     isTranslated = true;
                 }
@@ -61,16 +74,16 @@ namespace MineToot
                     type = "Joined/Left";
                     if (action == "joined")
                     {
-                        outMsg = "[System]: " + user + "がログインしました\r\n";
+                        outMsg = "[System]: " + user + " がログインしました\r\n";
                     }
                     else
                     {
-                        outMsg = "[System]: " + user + "がログアウトしました\r\n";
+                        outMsg = "[System]: " + user + " がログアウトしました\r\n";
                     }
 
                     isTranslated = true;
                 }
-               // Death
+                // Death
                 else if (type.ToLower() == "server thread/info" && clsDM.isDeathDt(text))
                 {
                     user = clsDM.userName;
